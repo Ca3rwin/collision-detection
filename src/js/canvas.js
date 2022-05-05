@@ -13,6 +13,14 @@ const mouse = {
 
 const colors = ['#2185C5', '#7ECEFD', '#FFF6E5', '#FF7F66']
 
+// Utility Functions
+function getDistance(x1, y1, x2, y2) {
+  let xDistance = x2 - x1;
+  let yDistance = y2 - y1;
+
+  return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+}
+
 // Event Listeners
 addEventListener('mousemove', (event) => {
   mouse.x = event.clientX
@@ -27,7 +35,7 @@ addEventListener('resize', () => {
 })
 
 // Objects
-class Object {
+class Circle {
   constructor(x, y, radius, color) {
     this.x = x
     this.y = y
@@ -49,9 +57,11 @@ class Object {
 }
 
 // Implementation
-let objects
+let circle1;
+let circle2;
 function init() {
-  objects = []
+  circle1 = new Circle(300, 300, 100, colors[0]);
+  circle2 = new Circle(undefined, undefined, 30, colors[1]);
 
   for (let i = 0; i < 400; i++) {
     // objects.push()
@@ -63,10 +73,16 @@ function animate() {
   requestAnimationFrame(animate)
   c.clearRect(0, 0, canvas.width, canvas.height)
 
-  c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y)
-  // objects.forEach(object => {
-  //  object.update()
-  // })
+  circle1.update();
+  circle2.x = mouse.x;
+  circle2.y = mouse.y;
+  circle2.update();
+
+  if(getDistance(circle1.x, circle1.y, circle2.x, circle2.y) < circle1.radius + circle2.radius) {
+    circle2.color = colors[2];
+  } else {
+    circle2.color = colors[1];
+  }
 }
 
 init()
