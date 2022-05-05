@@ -1,2 +1,3 @@
 # collision-detection
-Collision detection in JS
+
+Collision detection in HTML5 canvas
